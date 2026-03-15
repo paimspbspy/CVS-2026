@@ -489,14 +489,224 @@ tr:hover td { background: var(--py-blue-xlight); }
 .ai-chip:last-child { margin-bottom: 0; }
 .ai-status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); display: inline-block; margin-right: 5px; box-shadow: 0 0 6px var(--green); animation: pulse 2s infinite; }
 
-@media(max-width:900px) { .ai-container { flex-direction: column; height: auto; } .ai-sidebar { width: 100%; } }
-  .stat-grid { grid-template-columns: repeat(2,1fr) !important; }
-  .charts-row { grid-template-columns: 1fr; }
-  .semaforo-grid { grid-template-columns: 1fr; }
-  .modal-grid { grid-template-columns: 1fr; }
-  .main { padding: 16px; }
-  .header, .tabs-bar { padding: 0 16px; }
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — BREAKPOINTS
+   ── 900px  tablet landscape / small laptop
+   ── 768px  tablet portrait
+   ── 480px  mobile
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Tabs bar: scrollable on small screens ── */
+.tabs-bar {
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
+.tabs-bar::-webkit-scrollbar { display: none; }
+.tab-btn { white-space: nowrap; flex-shrink: 0; }
+
+/* ── 900px ── */
+@media (max-width: 900px) {
+  /* Layout */
+  .header    { padding: 0 16px; height: 58px; }
+  .tabs-bar  { padding: 0 16px; }
+  .main      { padding: 20px 16px; }
+
+  /* AI panel */
+  .ai-container { flex-direction: column; height: auto; }
+  .ai-sidebar   { width: 100%; }
+
+  /* KPI hero grid → 3 cols */
+  #tab-resumen > div:first-child {
+    grid-template-columns: 1fr !important;
+  }
+  #tab-resumen > div:first-child > div:first-child {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Charts 2-col → 1-col */
+  .charts-row { grid-template-columns: 1fr; }
+
+  /* Stat grid → 2-col */
+  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  /* Semáforo → 1-col */
+  .semaforo-grid { grid-template-columns: 1fr; }
+
+  /* Modal grid */
+  .modal-grid { grid-template-columns: 1fr; }
+
+  /* Fichas grid → 1-col */
+  #fichas-grid { grid-template-columns: 1fr !important; }
+  .ficha-card  { max-width: 100% !important; }
+
+  /* Seguimiento semanal timeline: scroll */
+  #sw-timeline { flex-wrap: wrap !important; }
+
+  /* Tab buttons: smaller padding */
+  .tab-btn { padding: 12px 14px; font-size: 12px; }
+  .tab-btn svg { display: none; }
+
+  /* Header: hide version badge */
+  #header-version { display: none; }
+}
+
+/* ── 768px ── */
+@media (max-width: 768px) {
+  /* Header: compact */
+  .header-logo   { width: 32px; height: 32px; }
+  .header-title  { font-size: 13px; }
+  .header-sub    { display: none; }
+  .header-right  { gap: 6px; }
+  #btn-import    { font-size: 11px; padding: 7px 12px; }
+
+  /* KPI hero → 2-col */
+  #tab-resumen > div:first-child > div:first-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Rings panel: full width below KPIs */
+  #tab-resumen > div:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  #tab-resumen > div:first-child > .chart-card {
+    min-width: unset !important;
+    width: 100%;
+  }
+
+  /* Cobertura section rings: side by side */
+  #tab-resumen .chart-card [style*="gap:24px"] {
+    gap: 16px !important;
+  }
+  .ring-wrap { width: 90px !important; height: 90px !important; }
+  .ring-wrap svg { width: 90px !important; height: 90px !important; }
+  .ring-pct { font-size: 17px !important; }
+
+  /* Filter rows: wrap */
+  .filter-row, [style*="display:flex"][style*="gap:12px"] {
+    flex-wrap: wrap;
+  }
+  .filter-select { min-width: 130px; }
+
+  /* Tables: horizontal scroll */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table       { min-width: 640px; }
+
+  /* Modal: full screen */
+  .import-modal, .detail-modal { max-width: 100% !important; border-radius: 16px 16px 0 0; margin-top: auto; }
+  .modal-overlay { align-items: flex-end !important; padding: 0 !important; }
+
+  /* Semáforo cols: 2-col */
+  .semaforo-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Semanal timeline: 2-per-row */
+  #sw-timeline > div { min-width: calc(50% - 4px) !important; flex: unset !important; }
+}
+
+/* ── 480px mobile ── */
+@media (max-width: 480px) {
+  /* Ultra compact header */
+  .header { height: 52px; padding: 0 12px; }
+  .header-logo { display: none; }
+  .header-title { font-size: 12px; }
+  .main { padding: 12px; }
+  .tabs-bar { padding: 0 12px; }
+  .tab-btn { padding: 10px 12px; font-size: 11px; }
+
+  /* KPI → 2 col, compact */
+  #tab-resumen > div:first-child > div:first-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .kpi-card { padding: 12px 14px !important; }
+  .kpi-value { font-size: 20px !important; }
+  .kpi-icon  { width: 22px !important; height: 22px !important; }
+
+  /* Charts: reduce height */
+  .chart-wrap[style*="height:260px"] { height: 220px !important; }
+  .chart-wrap[style*="height:280px"] { height: 220px !important; }
+  .chart-wrap[style*="height:320px"] { height: 280px !important; }
+
+  /* Rings: smaller */
+  .ring-wrap { width: 80px !important; height: 80px !important; }
+  .ring-wrap svg { width: 80px !important; height: 80px !important; }
+  .ring-pct { font-size: 15px !important; }
+  .ring-lbl { font-size: 9px !important; }
+
+  /* Semáforo: 1 col */
+  .semaforo-grid { grid-template-columns: 1fr !important; }
+
+  /* Charts row gap */
+  .charts-row { gap: 10px !important; }
+  .chart-card { padding: 14px !important; }
+  .card-title { font-size: 12px !important; }
+
+  /* Fichas: full width, tighter */
+  .ficha-card { border-radius: 12px !important; }
+
+  /* Semanal timeline: 2-per-row */
+  #sw-timeline > div { min-width: calc(50% - 4px) !important; flex: unset !important; }
+
+  /* Filter controls: stack */
+  #tab-semanas > div[style*="display:flex"],
+  #tab-fichas  > div[style*="display:flex"],
+  #tab-establecimientos > div[style*="display:flex"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .filter-select { width: 100% !important; }
+
+  /* Hide chart sub-labels on tiny screens */
+  .card-sub { display: none; }
+
+  /* Tables: compact */
+  th, td { padding: 7px 8px !important; font-size: 11px !important; }
+
+  /* Import modal */
+  .import-modal { border-radius: 14px 14px 0 0; }
+  .drop-zone { padding: 20px 16px !important; }
+}
+
+/* ── Touch: improve tap targets ── */
+@media (pointer: coarse) {
+  .tab-btn     { min-height: 44px; }
+  .filter-select { min-height: 40px; }
+  .btn-capture { min-height: 44px !important; min-width: 44px !important; }
+  select, button, label { cursor: pointer; }
+}
+
+/* ── KPI CARDS (resumen redesign) ── */
+.kpi-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px 18px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 2px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative; overflow: hidden;
+}
+.kpi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; border-radius: 14px 14px 0 0;
+}
+.kpi-card.kpi-blue::before  { background: var(--py-blue); }
+.kpi-card.kpi-green::before { background: var(--green); }
+.kpi-card.kpi-red::before   { background: var(--red); }
+.kpi-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,43,127,0.12); }
+.kpi-icon {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 6px; flex-shrink: 0;
+}
+.kpi-label {
+  font-size: 10px; font-weight: 600; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-family: 'DM Mono', monospace;
+}
+.kpi-value { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin: 2px 0; }
+.kpi-sub   { font-size: 10px; color: var(--text3); font-family: 'DM Mono', monospace; }
 </style>
 </head>
 <body>
@@ -555,100 +765,140 @@ tr:hover td { background: var(--py-blue-xlight); }
 
 <!-- TAB 1: RESUMEN -->
 <div id="tab-resumen" class="tab-panel active">
-  <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
-    <div class="stat-card blue">
-      <div class="stat-label">Meta total (INE)</div>
-      <div class="stat-value blue" id="s-meta-ine">18.306</div>
-      <div class="stat-desc">Niños a vacunar según INE</div>
+
+  <!-- ── ROW 1: KPI HERO + RINGS ────────────────────────────── -->
+  <div style="display:grid;grid-template-columns:1fr auto;gap:16px;margin-bottom:20px;align-items:stretch">
+
+    <!-- KPI grid 2×3 -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:12px">
+
+      <div class="kpi-card kpi-blue">
+        <div class="kpi-icon" style="background:rgba(0,43,127,0.1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#002B7F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M3 21v-2a9 9 0 0 1 18 0v2"/></svg>
+        </div>
+        <div class="kpi-label">Meta INE</div>
+        <div class="kpi-value" id="s-meta-ine" style="color:var(--py-blue)">18.306</div>
+        <div class="kpi-sub">Universo proyectado</div>
+      </div>
+
+      <div class="kpi-card kpi-blue">
+        <div class="kpi-icon" style="background:rgba(0,43,127,0.1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#002B7F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+        </div>
+        <div class="kpi-label">Meta Nómina</div>
+        <div class="kpi-value" id="s-meta-nom" style="color:var(--py-blue)">16.152</div>
+        <div class="kpi-sub">Universo nominal</div>
+      </div>
+
+      <div class="kpi-card kpi-green">
+        <div class="kpi-icon" style="background:rgba(26,138,58,0.1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1a8a3a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="kpi-label">Vacunados</div>
+        <div class="kpi-value" id="s-vacunados" style="color:var(--green)">2.127</div>
+        <div class="kpi-sub">Acumulado regional</div>
+      </div>
+
+      <div class="kpi-card kpi-red">
+        <div class="kpi-icon" style="background:rgba(213,43,30,0.1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D52B1E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="kpi-label">Faltantes INE</div>
+        <div class="kpi-value" id="s-faltantes" style="color:var(--red)">16.179</div>
+        <div class="kpi-sub">Pendientes proyectados</div>
+      </div>
+
+      <div class="kpi-card kpi-red">
+        <div class="kpi-icon" style="background:rgba(213,43,30,0.1)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D52B1E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="kpi-label">Faltantes Nómina</div>
+        <div class="kpi-value" id="s-faltantes-nom" style="color:var(--red)">14.025</div>
+        <div class="kpi-sub">Pendientes nominales</div>
+      </div>
+
+      <!-- Semana actual pill -->
+      <div class="kpi-card" style="background:var(--py-blue);border-color:var(--py-blue)">
+        <div class="kpi-icon" style="background:rgba(255,255,255,0.15)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="kpi-label" style="color:rgba(255,255,255,0.65)">Semana actual</div>
+        <div class="kpi-value" id="s-semana-actual" style="color:#FFD700;font-size:22px">S1</div>
+        <div class="kpi-sub" style="color:rgba(255,255,255,0.5)">09/03 – 15/03</div>
+      </div>
+
     </div>
-    <div class="stat-card blue">
-      <div class="stat-label">Meta total (Nómina)</div>
-      <div class="stat-value blue" id="s-meta-nom">16.152</div>
-      <div class="stat-desc">Niños a vacunar según Nómina</div>
-    </div>
-    <div class="stat-card green">
-      <div class="stat-label">Niños vacunados</div>
-      <div class="stat-value green" id="s-vacunados">2.127</div>
-      <div class="stat-desc">Acumulado todos los distritos</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-label">Faltantes (INE)</div>
-      <div class="stat-value red" id="s-faltantes">16.179</div>
-      <div class="stat-desc">Pendientes según INE</div>
-    </div>
-    <div class="stat-card red">
-      <div class="stat-label">Faltantes (Nómina)</div>
-      <div class="stat-value red" id="s-faltantes-nom">14.025</div>
-      <div class="stat-desc">Pendientes según Nómina</div>
-    </div>
-    <div class="stat-card amber">
-      <div class="stat-label">Avance regional (INE)</div>
-      <div class="stat-value amber" id="s-pct">11.6%</div>
-      <div class="stat-desc">Cobertura según INE</div>
-    </div>
-    <div class="stat-card amber">
-      <div class="stat-label">Avance regional (Nómina)</div>
-      <div class="stat-value amber" id="s-pct-nom">13.2%</div>
-      <div class="stat-desc">Cobertura según Nómina</div>
+
+    <!-- RINGS panel -->
+    <div class="chart-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 28px;min-width:240px;gap:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--text);letter-spacing:-0.01em;text-align:center">Cobertura global</div>
+      <div style="display:flex;gap:24px;align-items:center">
+        <div style="text-align:center">
+          <div class="ring-container"><div class="ring-wrap">
+            <svg viewBox="0 0 120 120" width="120" height="120">
+              <circle class="ring-bg" cx="60" cy="60" r="50"/>
+              <circle class="ring-fill" cx="60" cy="60" r="50" id="ring-ine" stroke="#002B7F" stroke-dasharray="314.16" stroke-dashoffset="277.8"/>
+            </svg>
+            <div class="ring-center">
+              <div class="ring-pct" style="color:var(--py-blue)" id="ring-ine-pct">11.6%</div>
+              <div class="ring-lbl">INE</div>
+            </div>
+          </div></div>
+          <div style="margin-top:8px;font-size:10px;font-family:'DM Mono',monospace;color:var(--text3)">2.127 / 18.306</div>
+        </div>
+        <div style="text-align:center">
+          <div class="ring-container"><div class="ring-wrap">
+            <svg viewBox="0 0 120 120" width="120" height="120">
+              <circle class="ring-bg" cx="60" cy="60" r="50"/>
+              <circle class="ring-fill" cx="60" cy="60" r="50" id="ring-nom" stroke="#D52B1E" stroke-dasharray="314.16" stroke-dashoffset="272.8"/>
+            </svg>
+            <div class="ring-center">
+              <div class="ring-pct" style="color:var(--py-red)" id="ring-nom-pct">13.2%</div>
+              <div class="ring-lbl">Nómina</div>
+            </div>
+          </div></div>
+          <div style="margin-top:8px;font-size:10px;font-family:'DM Mono',monospace;color:var(--text3)">2.127 / 16.152</div>
+        </div>
+      </div>
+      <!-- Progress bars under rings -->
+      <div style="width:100%;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--text3);width:36px">INE</div>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden">
+            <div style="height:100%;width:11.6%;background:var(--py-blue);border-radius:3px"></div>
+          </div>
+          <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--py-blue);font-weight:700;width:36px" id="s-pct">11.6%</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--text3);width:36px">Nom.</div>
+          <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden">
+            <div style="height:100%;width:13.2%;background:var(--py-red);border-radius:3px"></div>
+          </div>
+          <div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--py-red);font-weight:700;width:36px" id="s-pct-nom">13.2%</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="charts-row">
+  <!-- ── ROW 2: CHARTS 2-COL ────────────────────────────────── -->
+  <div class="charts-row" style="margin-bottom:20px">
     <div class="chart-card">
-      <div class="card-title">Avance por distrito — INE vs Nómina</div>
-      <div class="card-sub">% cobertura comparativo de fuentes</div>
-      <div class="chart-wrap" style="height:280px"><canvas id="chartDistritosBars"></canvas></div>
+      <div class="card-title">% Avance por distrito — INE vs Nómina</div>
+      <div class="card-sub">Comparativo de fuentes por distrito</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartDistritosBars"></canvas></div>
     </div>
-    <div class="chart-card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
-      <div style="width:100%">
-        <div class="card-title">Cobertura global</div>
-        <div class="card-sub">INE y Nómina</div>
-      </div>
-      <div style="display:flex;gap:32px;align-items:center">
-        <div style="text-align:center">
-          <div class="ring-container">
-            <div class="ring-wrap">
-              <svg viewBox="0 0 120 120" width="120" height="120">
-                <circle class="ring-bg" cx="60" cy="60" r="50"/>
-                <circle class="ring-fill" cx="60" cy="60" r="50" id="ring-ine" stroke="#002B7F" stroke-dasharray="314.16" stroke-dashoffset="277.8"/>
-              </svg>
-              <div class="ring-center">
-                <div class="ring-pct" style="color:var(--py-blue)" id="ring-ine-pct">11.6%</div>
-                <div class="ring-lbl">INE</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style="text-align:center">
-          <div class="ring-container">
-            <div class="ring-wrap">
-              <svg viewBox="0 0 120 120" width="120" height="120">
-                <circle class="ring-bg" cx="60" cy="60" r="50"/>
-                <circle class="ring-fill" cx="60" cy="60" r="50" id="ring-nom" stroke="#D52B1E" stroke-dasharray="314.16" stroke-dashoffset="272.8"/>
-              </svg>
-              <div class="ring-center">
-                <div class="ring-pct" style="color:var(--py-red)" id="ring-nom-pct">13.2%</div>
-                <div class="ring-lbl">Nómina</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="chart-card">
+      <div class="card-title">Vacunados vs Faltantes Nómina por distrito</div>
+      <div class="card-sub">Distribución absoluta — universo nominal</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="chartStackedDist"></canvas></div>
     </div>
   </div>
 
-  <div class="charts-row">
-    <div class="chart-card" style="grid-column:1/-1">
-      <div class="card-title">Vacunados vs Meta Nómina por distrito</div>
-      <div class="card-sub">Cobertura real sobre universo nominal</div>
-      <div class="chart-wrap" style="height:280px"><canvas id="chartStackedDist"></canvas></div>
-    </div>
-  </div>
-
+  <!-- ── ROW 3: TOP 11 ──────────────────────────────────────── -->
   <div class="charts-row">
     <div class="chart-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px">
-        <div class="card-title" id="top-ine-title">Top 11 — Mejor cobertura por establecimiento (INE)</div>
+        <div class="card-title" id="top-ine-title">Top 11 — Mejor cobertura (INE)</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <select class="filter-select" id="top-ine-distrito" onchange="rebuildTop11()" style="font-size:11px;padding:5px 10px">
             <option value="">Todos los distritos</option>
@@ -668,7 +918,7 @@ tr:hover td { background: var(--py-blue-xlight); }
     </div>
     <div class="chart-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px">
-        <div class="card-title" id="top-nom-title">Top 11 — Mejor cobertura por establecimiento (Nómina)</div>
+        <div class="card-title" id="top-nom-title">Top 11 — Mejor cobertura (Nómina)</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <select class="filter-select" id="top-nom-distrito" onchange="rebuildTop11()" style="font-size:11px;padding:5px 10px">
             <option value="">Todos los distritos</option>
@@ -687,7 +937,9 @@ tr:hover td { background: var(--py-blue-xlight); }
       <div class="chart-wrap" style="height:320px"><canvas id="chartTop10Nom"></canvas></div>
     </div>
   </div>
+
 </div>
+
 
 <!-- TAB 2: DISTRITOS -->
 <div id="tab-distritos" class="tab-panel">
@@ -1649,10 +1901,9 @@ function applyImport() {
   document.getElementById('s-meta-nom').textContent=fmt(tn);
   document.getElementById('s-vacunados').textContent=fmt(tv);
   document.getElementById('s-faltantes').textContent=fmt(tm-tv);
-  document.getElementById('s-faltantes-nom').textContent=fmt(tn2-tv);
+  document.getElementById('s-faltantes-nom').textContent=fmt(tn-tv);
   document.getElementById('s-pct').textContent=pct+'%';
-  const tn2=DISTRITOS_NOM.reduce((s,d)=>s+d.meta,0);
-  const pctNom=tn2>0?Math.round(tv/tn2*1000)/10:0;
+  const pctNom=tn>0?Math.round(tv/tn*1000)/10:0;
   document.getElementById('s-pct-nom').textContent=pctNom+'%';
   // Update rings
   const circum=2*Math.PI*50;
@@ -1660,6 +1911,15 @@ function applyImport() {
   const rNom=document.getElementById('ring-nom');
   if(rIne){ rIne.setAttribute('stroke-dashoffset',(circum-circum*Math.min(pct,100)/100).toFixed(1)); document.getElementById('ring-ine-pct').textContent=pct+'%'; }
   if(rNom){ rNom.setAttribute('stroke-dashoffset',(circum-circum*Math.min(pctNom,100)/100).toFixed(1)); document.getElementById('ring-nom-pct').textContent=pctNom+'%'; }
+  // Update progress bars in rings panel
+  const bars=document.querySelectorAll('#tab-resumen .kpi-card ~ .chart-card div[style*="background:var(--py-blue)"], #tab-resumen [style*="width:11.6%"], #tab-resumen [style*="width:13.2%"]');
+  // Update inline progress bars by querying the ring panel
+  const ringPanel=document.querySelector('#tab-resumen .chart-card');
+  if(ringPanel){
+    const allBars=ringPanel.querySelectorAll('div[style*="height:6px"][style*="background:var(--bg3)"] > div');
+    if(allBars[0]) allBars[0].style.width=Math.min(pct,100)+'%';
+    if(allBars[1]) allBars[1].style.width=Math.min(pctNom,100)+'%';
+  }
   document.getElementById('header-version').textContent='Actualizado · '+new Date().toLocaleDateString('es-PY');
   setTimeout(()=>{
     buildCharts(); renderSemaforo(); filterTable(); renderCobTable('ine');
@@ -2173,6 +2433,13 @@ document.addEventListener('DOMContentLoaded', function() {
   renderCobTable('ine');
   renderSemaforo();
   filterTable();
+  // Semana actual en KPI hero
+  (function(){
+    const cw=getCurrentWeek();
+    const wd=CAMPAIGN.weeks[cw-1];
+    const el=document.getElementById('s-semana-actual');
+    if(el){ el.textContent='S'+cw; el.nextElementSibling.textContent=wd?wd.range:'—'; }
+  })();
 });
 
 
@@ -2181,7 +2448,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const CAMPAIGN = {
   start: new Date(2026, 2, 9),
   end:   new Date(2026, 4, 9),
-  today: new Date(2026, 2, 14),
+  today: new Date(),       // fecha real del sistema — se actualiza automáticamente cada vez que se carga la página
   weeks: [
     {n:1, pct:30, label:'Semana 1', range:'09/03–15/03'},
     {n:2, pct:25, label:'Semana 2', range:'16/03–22/03'},
