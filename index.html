@@ -898,15 +898,15 @@ tr:hover td { background: var(--py-blue-xlight); }
   <div class="charts-row">
     <div class="chart-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px">
-        <div class="card-title" id="top-ine-title">Top 11 — Mejor cobertura (INE)</div>
+        <div class="card-title" id="top-ine-title">Top 10 — Mejor cobertura (INE)</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <select class="filter-select" id="top-ine-distrito" onchange="rebuildTop11()" style="font-size:11px;padding:5px 10px">
             <option value="">Todos los distritos</option>
           </select>
           <select class="filter-select" id="top-ine-n" onchange="rebuildTop11()" style="font-size:11px;padding:5px 10px">
-            <option value="11">Top 11</option>
-            <option value="5">Top 5</option>
             <option value="10">Top 10</option>
+            <option value="5">Top 5</option>
+            <option value="11">Top 11</option>
             <option value="15">Top 15</option>
             <option value="20">Top 20</option>
             <option value="0">Todos</option>
@@ -918,15 +918,15 @@ tr:hover td { background: var(--py-blue-xlight); }
     </div>
     <div class="chart-card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px">
-        <div class="card-title" id="top-nom-title">Top 11 — Mejor cobertura (Nómina)</div>
+        <div class="card-title" id="top-nom-title">Top 10 — Mejor cobertura (Nómina)</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <select class="filter-select" id="top-nom-distrito" onchange="rebuildTop11()" style="font-size:11px;padding:5px 10px">
             <option value="">Todos los distritos</option>
           </select>
           <select class="filter-select" id="top-nom-n" onchange="rebuildTop11()" style="font-size:11px;padding:5px 10px">
-            <option value="11">Top 11</option>
-            <option value="5">Top 5</option>
             <option value="10">Top 10</option>
+            <option value="5">Top 5</option>
+            <option value="11">Top 11</option>
             <option value="15">Top 15</option>
             <option value="20">Top 20</option>
             <option value="0">Todos</option>
@@ -1947,8 +1947,8 @@ function resetImport() {
 function rebuildTop11() {
   const distIne = document.getElementById('top-ine-distrito').value;
   const distNom = document.getElementById('top-nom-distrito').value;
-  const nIne    = parseInt(document.getElementById('top-ine-n').value) || 11;
-  const nNom    = parseInt(document.getElementById('top-nom-n').value) || 11;
+  const nIne    = parseInt(document.getElementById('top-ine-n').value) || 10;
+  const nNom    = parseInt(document.getElementById('top-nom-n').value) || 10;
 
   function buildTopChart(canvasId, source, distFilter, topN, titleId, subId) {
     const ch = Chart.getChart(document.getElementById(canvasId));
@@ -2209,7 +2209,7 @@ function buildFichaHTML(e, weekN, logoSrc) {
   const pctNom  = e.pct_nomina;
   const metaSem = Math.round((e.faltantes_nomina||0) * w.pct / 100);
   const metaCum = Math.round((e.faltantes_nomina||0) * w.cum / 100);
-  const cumpl   = metaCum > 0 ? Math.min(200, Math.round(e.vacunados / metaCum * 100)) : 0;
+  const cumpl   = metaCum > 0 ? Math.min(100, Math.round(e.vacunados / metaCum * 100)) : 0;
 
   // Paraguay: rojo, blanco, azul
   const RED  = '#D52B1E';
@@ -2429,7 +2429,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // top-nom-distrito: only "Todos los distritos" (no filter by district)
   });
   buildCharts();
-  setTimeout(rebuildTop11, 100);
+  setTimeout(rebuildTop11, 400);
   renderCobTable('ine');
   renderSemaforo();
   filterTable();
@@ -2571,7 +2571,7 @@ function renderSemanalCharts() {
     g.metaSem  = Math.round(g.pend * wData.pct / 100);
     g.metaCum  = Math.round(g.pend * wData.cum / 100);
     g.pctReal  = g.pend>0 ? g.vac/g.pend*100 : 0;
-    g.cumpl    = g.metaCum>0 ? Math.min(200, g.vac/g.metaCum*100) : 0;
+    g.cumpl    = g.metaCum>0 ? Math.min(100, g.vac/g.metaCum*100) : 0;
   });
   groups.sort((a,b)=>b.vac-a.vac);
 
